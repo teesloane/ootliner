@@ -1,0 +1,100 @@
+/* Styles that will be ported to javascript gen. eventually. */
+
+
+
+@keyframes outline_mini_enter {
+  0% { left: -100px; }
+  100% { left: 0px; }
+}
+
+.oot_base {
+  max-height: 70vh;
+  overflow-y: scroll;
+  padding-right: 24px !important;
+}
+
+.oot_outline_expanded {
+  color:         #333;
+  left:          0;
+  padding: 32px 8px 32px 8px !important;
+  position:      fixed;
+  top:           30%;
+  opacity:       1;
+  animation: outline_mini_enter 0.4s ease;
+}
+
+.oot_outline_expanded_hide {
+  color:         #333;
+  left:          -100px !important;
+  padding: 32px 8px 32px 8px !important;
+  position:      fixed;
+  top:           30%;
+  opacity:       0;
+  transition:   all 0.4s ease;
+}
+
+.oot_outline_mini {
+  transition: all 0.2s ease;
+  color:         #333;
+  padding: 32px 8px 32px 0px !important;
+  left:          0;
+  position:      fixed;
+  top:           30%;
+  animation-name: outline_mini_enter;
+  animation-duration: 0.4s;
+}
+
+
+/* Base heading class */
+.oot_base_class {
+  font-family:     "arial";
+  list-style-type: none;
+  padding:         4px;
+  cursor:          pointer;
+  max-width:       500px;
+  padding-top:     6px;
+  padding-bottom:  6px;
+}
+
+.oot_base_class:hover {
+  color: lightsalmon;
+}
+
+
+/* Heading specific styles; when in `mini` mode. */
+.oot_h_mini {
+  padding-left: 0 !important;
+}
+
+.oot_h1 {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.oot_h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  padding-left: 1rem;
+
+}
+
+.oot_h3 {
+  font-size: 0.8rem;
+  padding-left: 2rem;
+}
+
+.oot_h4 {
+  font-size: 0.7rem;
+  padding-left: 3rem;
+
+}
+
+.oot_h5 {
+  font-size: 0.7rem;
+  padding-left: 3rem;
+}
+
+.oot_h6 {
+  font-size: 0.7rem;
+  padding-left: 3rem;
+}

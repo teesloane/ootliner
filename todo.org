@@ -1,0 +1,14 @@
+#+TITLE: todo
+
+* Configuration object
+User's should be able to configure the followingL:
+- style object (for the list item... font, colors, etc)
+- bool: ignore blank headers (ie, headers with no id's),
+- array: list of headers to query from (ie, just h1's... or h2's etc)
+- additional padding to scroll when moving down
+* Make NPM installable
+* Move styles.css into injectable js
+* Prevent glitchy-ness on mouse enter when mouse-exit functionality is happening.
+- debounce
+- or have a flag for "active" and prevent mouse-enter things from happening if
+  ~active~ is engaged.

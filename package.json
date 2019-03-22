@@ -1,0 +1,32 @@
+{
+  "name": "ootliner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startwer": "rollup src/main.js --file dist/bundle.js --format iife --watch",
+    "dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teesloane/ootliner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teesloane/ootliner/issues"
+  },
+  "homepage": "https://github.com/teesloane/ootliner#readme",
+  "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1"
+  },
+  "devDependencies": {
+    "rollup": "^1.7.3",
+    "rollup-plugin-commonjs": "^9.2.2",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-node-resolve": "^4.0.1"
+  }
+}
