@@ -5,3 +5,4 @@ tmp/
 
 *.tern-port
 node_modules
+dist/

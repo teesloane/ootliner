@@ -1,41 +1,46 @@
 import "./styles.css";
-import throttle from "lodash.throttle"
-// import debounce from 'lodash.debounce'
 
-
-var els = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+var els;
 var outlineDS = [];
 var outlineOpening = false;
 var outlineClosing = false;
 var n = document.createElement("UL");                    // the main <ul> of the outline.
 
-
 /**
- * createOutlineNode builds the outline container for the entire outline.
+ * init builds the outline container for the entire outline.
  * then, it searches for all header tags and runs CreateOutlineItem forEach.
  */
-function createOutlineNode() {
-  n.classList = "oot_base oot_outline_mini";               // initial starting class (start "closed")
-  els.forEach(e => {                                       // loop through the headings
-    e.id ? e.id : (e.id = e.textContent);                  // set an id if the element doesn't have one.
-    n.appendChild(CreateOutlineItem(e));                   // send the element to be turned into a list item.
-    outlineDS.push(e.textContent);                         // put text contents into datastructure
+function init() {
+  n.classList = "oot_base oot_outline_mini";            // initial starting class (start "closed")
+  initState()
+  els.forEach(e => {                                    // loop through the headings
+    if (!e.id) { e.id = e.textContent }                 // set an id if the element doesn't have one.
+    n.appendChild(CreateOutlineItem(e));                // send the element to be turned into a list item.
+    outlineDS.push(e.textContent);                      // put text contents into datastructure
   });
 
-  document.body.appendChild(n);                            // Graft that shit onto your fully sick site.
-  transformMode(n, "mini");                                // Start in mini mode.
-  n.addEventListener("mouseenter", throttle(openMenu, 400));
-  n.addEventListener("mouseleave", throttle(closeMenu, 400));
+  document.body.appendChild(n);                         // Graft that it onto your site.
+  transformMode(n, "mini");                             // Start in mini mode.
+  n.addEventListener("mouseenter", openMenu);
+  n.addEventListener("mouseleave", closeMenu);
+}
+
+/**
+ * Sets up nodes, etc
+ */
+function initState() {
+  els = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
 }
 
 /**
  * Sets the classes to close the menu and changes the list item text to dashes.
  */
 function closeMenu() {
+  if (outlineClosing) return;
   if (outlineOpening) {
-    setTimeout(() => closeMenu(), 400);                // The menu is currently opening, try again in 400ms.
+    setTimeout(() => closeMenu(), 400);                 // The menu is currently opening, try again in 400ms.
   } else {
-    outlineClosing = true;                                 // The menu is closing now, so let's
+    outlineClosing = true;                              // The menu is closing now, so let's
     n.classList = "oot_base oot_outline_expanded_hide"; // remove class so we can do:
     void n.offsetWidth;                                 // hack to recalculate css to trigger animation.
     setTimeout(() => {
@@ -51,8 +56,10 @@ function closeMenu() {
  * After 400ms, set outlineOpening to false.
  */
 function openMenu() {
+  if (outlineOpening) return
+
   if (outlineClosing) {
-    setTimeout(() => openMenu(), 400);                // The menu is currently opening, try again in 400ms.
+    setTimeout(() => openMenu(), 400);                  // The menu is currently opening, try again in 400ms.
   } else {
     outlineOpening = true;
     n.classList = "oot_base";                           // remove class so we can do:
@@ -61,7 +68,7 @@ function openMenu() {
     transformMode(n, "full");                           // convert outline items to their text headings.
     setTimeout(() => {
       outlineOpening = false;
-    }, 400);                                               // done opening, set it to false
+    }, 400);                                            // done opening, set it to false
   }
 }
 
@@ -78,7 +85,7 @@ function transformMode(outline, mode) {
   };
   var hasH = (el, h) => el.classList.contains("oot_" + h);
 
-  if (mode == "mini") {
+  if (mode === "mini") {
     items.forEach(el => {
       if (hasH(el, "h1") || hasH(el, "h2")) {
         el.classList.add("oot_h_mini");
@@ -90,7 +97,7 @@ function transformMode(outline, mode) {
     });
   }
 
-  if (mode == "full") {
+  if (mode === "full") {
     items.forEach((el, idx) => {
       el.classList.remove("oot_h_mini");
       fmt(el, outlineDS[idx]);
@@ -136,4 +143,4 @@ function applyStyling(elType) {
   }
 }
 
-createOutlineNode();
+export default init

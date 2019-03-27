@@ -1,16 +1,30 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import postcss from 'rollup-plugin-postcss';
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
+import postcss from "rollup-plugin-postcss";
 
 export default {
-  input: 'src/main.js',
+  input: "src/main.js",
   output: {
-    file: 'dist/bundle.js',
-    format: 'iife'
+    file: "lib/index.js",
+    format: "iife",
+    name: "ootliner"
   },
-    plugins: [
-        postcss({extensions: [ '.css' ]}),
-        commonjs(),
-        resolve()
-    ]
+  output: [
+    {
+      file: "lib/index.js",
+      format: "iife",
+      name: "ootliner"
+    },
+    {
+      file: "lib/index.umd.js",
+      format: "umd",
+      name: "ootliner"
+    },
+    {
+      file: "lib/index.es.js",
+      format: "es",
+      name: "ootliner"
+    }
+  ],
+  plugins: [postcss({ extensions: [".css"] }), commonjs(), resolve()]
 };
