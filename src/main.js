@@ -28,7 +28,7 @@ function init(opts) {
   n.addEventListener("mouseleave", () => closeMenu(opts));
 
   // - styling
-  const s = styles.buildCSS(opts)
+  var s = styles.buildCSS(opts)
   styles.styleInject(s);
 }
 
@@ -117,7 +117,7 @@ function transformMode(outline, mode) {
  * createOutlineItem receives a heading node and makes a LI node for it.
  */
 function CreateOutlineItem(e) {
-  let node = document.createElement("LI");
+  var node = document.createElement("LI");
   node.setAttribute("class", "oot_base_class " + applyStyling(e.tagName));
   node.onclick = () => jumpToHeading(e.id);
   node.textContent = e.textContent;
