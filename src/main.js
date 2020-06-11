@@ -1,4 +1,5 @@
-import "./styles.css";
+// import "./styles.css";
+import styles from './styles';
 
 var els;
 var outlineDS = [];
@@ -10,9 +11,11 @@ var n = document.createElement("UL");                    // the main <ul> of the
  * init builds the outline container for the entire outline.
  * then, it searches for all header tags and runs CreateOutlineItem forEach.
  */
-function init() {
+function init(opts) {
+  console.log("opts is ", opts)
+
   n.classList = "oot_base oot_outline_mini";            // initial starting class (start "closed")
-  initState()
+  initState(opts)
   els.forEach(e => {                                    // loop through the headings
     if (!e.id) { e.id = e.textContent }                 // set an id if the element doesn't have one.
     n.appendChild(CreateOutlineItem(e));                // send the element to be turned into a list item.
@@ -21,24 +24,29 @@ function init() {
 
   document.body.appendChild(n);                         // Graft that it onto your site.
   transformMode(n, "mini");                             // Start in mini mode.
-  n.addEventListener("mouseenter", openMenu);
-  n.addEventListener("mouseleave", closeMenu);
+  n.addEventListener("mouseenter", () => openMenu(opts));
+  n.addEventListener("mouseleave", () => closeMenu(opts));
+
+  // - styling
+  const s = styles.buildCSS(opts)
+  styles.styleInject(s);
 }
+
 
 /**
  * Sets up nodes, etc
  */
-function initState() {
-  els = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+function initState(opts) {
+  els = document.querySelectorAll(opts.headings || "h1, h2, h3, h4, h5, h6");
 }
 
 /**
  * Sets the classes to close the menu and changes the list item text to dashes.
  */
-function closeMenu() {
+function closeMenu(opts) {
   if (outlineClosing) return;
   if (outlineOpening) {
-    setTimeout(() => closeMenu(), 400);                 // The menu is currently opening, try again in 400ms.
+    setTimeout(() => closeMenu(opts), 400);             // The menu is currently opening, try again in 400ms.
   } else {
     outlineClosing = true;                              // The menu is closing now, so let's
     n.classList = "oot_base oot_outline_expanded_hide"; // remove class so we can do:
@@ -55,11 +63,11 @@ function closeMenu() {
  * Sets css classes to open the Ootliner.
  * After 400ms, set outlineOpening to false.
  */
-function openMenu() {
+function openMenu(opts) {
   if (outlineOpening) return
 
   if (outlineClosing) {
-    setTimeout(() => openMenu(), 400);                  // The menu is currently opening, try again in 400ms.
+    setTimeout(() => openMenu(opts), 400);                  // The menu is currently opening, try again in 400ms.
   } else {
     outlineOpening = true;
     n.classList = "oot_base";                           // remove class so we can do:
