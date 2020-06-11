@@ -2,11 +2,9 @@
   "name": "ootliner",
   "version": "0.0.2",
   "description": "Generate a floating table of contents",
-  "main": "lib/index.js",
   "main": "lib/index.umd.js",
   "browser": "lib/index.umd.js",
   "module": "lib/index.es.js",
-
   "scripts": {
     "dev": "rollup -c -w"
   },
